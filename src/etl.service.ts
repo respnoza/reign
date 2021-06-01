@@ -10,12 +10,13 @@ export class EtlService {
     constructor(private httpService: HttpService) {}
 
     //@Cron(CronExpression.EVERY_HOUR)
-    async handleCron(): Promise<any>{
-        const value = await this.httpService.get(this.urlapi);
-        value.subscribe((result) =>{
-            console.log(result.data.hits);
-            return result.data.hits;
-        });
-    }
+    return new Promise((resolve) => {
+            value.subscribe((result) => {
+                // Aqui sacamos a flote la variable
+                resolve(result.data.hits)
+            }, error => {
+                throw error;
+            })
+        })
   
 }
